@@ -7,7 +7,9 @@ This changelog was automatically generated using [Caretaker](https://github.com/
 
 ### [Unreleased](https://github.com/CICDToolbox/json-lint/commits/master)
 
-- Fix find command [`[head]`](https://github.com/CICDToolbox/json-lint/commit/)
+- Make errors easier to see and default to showing errors [`[head]`](https://github.com/CICDToolbox/json-lint/commit/)
+
+- Fix find command [`[b729044]`](https://github.com/CICDToolbox/json-lint/commit/b729044d34bf0f5fa75d25138199e465a945e86a)
 
 - Fix find command [`[f6dac01]`](https://github.com/CICDToolbox/json-lint/commit/f6dac019c99a1757fb59848112e000b6c0516599)
 
