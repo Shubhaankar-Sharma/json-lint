@@ -7,7 +7,9 @@ This changelog was automatically generated using [Caretaker](https://github.com/
 
 ### [Unreleased](https://github.com/CICDToolbox/json-lint/commits/master)
 
-- Make errors easier to see and default to showing errors [`[head]`](https://github.com/CICDToolbox/json-lint/commit/)
+- Change the logic for skipping and showing skipped files [`[head]`](https://github.com/CICDToolbox/json-lint/commit/)
+
+- Make errors easier to see and default to showing errors [`[8a99b48]`](https://github.com/CICDToolbox/json-lint/commit/8a99b48439ca5dddf769d8029bda228bf2eba0bc)
 
 - Fix find command [`[b729044]`](https://github.com/CICDToolbox/json-lint/commit/b729044d34bf0f5fa75d25138199e465a945e86a)
 

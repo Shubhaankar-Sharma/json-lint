@@ -109,28 +109,6 @@ function validate_json_from_file()
 }
 
 # -------------------------------------------------------------------------------- #
-# Check                                                                            #
-# -------------------------------------------------------------------------------- #
-# Check a specific file.                                                           #
-# -------------------------------------------------------------------------------- #
-
-function check()
-{
-    local filename="$1"
-    local errors
-
-    file_count=$((file_count+1))
-
-    if errors=$( validate_json_from_file "${filename}" 2>&1 ); then
-        success "${filename}"
-        ok_count=$((ok_count+1))
-    else
-        fail "${filename}" "${errors}"
-        fail_count=$((fail_count+1))
-    fi
-}
-
-# -------------------------------------------------------------------------------- #
 # Is Excluded                                                                      #
 # -------------------------------------------------------------------------------- #
 # Check to see if the filename is in the exclude_list.                             #
@@ -148,6 +126,34 @@ function is_excluded()
     return 1
 }
 
+
+# -------------------------------------------------------------------------------- #
+# Check                                                                            #
+# -------------------------------------------------------------------------------- #
+# Check a specific file.                                                           #
+# -------------------------------------------------------------------------------- #
+
+function check()
+{
+    local filename="$1"
+    local errors
+
+    if is_excluded "${filename}"; then
+        skip "${filename}"
+        skip_count=$((skip_count+1))
+    else
+        file_count=$((file_count+1))
+
+        if errors=$( validate_json_from_file "${filename}" 2>&1 ); then
+            success "${filename}"
+            ok_count=$((ok_count+1))
+        else
+            fail "${filename}" "${errors}"
+            fail_count=$((fail_count+1))
+        fi
+    fi
+}
+
 # -------------------------------------------------------------------------------- #
 # Scan Files                                                                       #
 # -------------------------------------------------------------------------------- #
@@ -158,15 +164,10 @@ function scan_files()
 {
     while IFS= read -r filename
     do
-        if is_excluded "${filename}"; then
-            skip "${filename}"
-            skip_count=$((skip_count+1))
-        else
-            if file -b "${filename}" | grep -qE "${FILE_TYPE_SEARCH_PATTERN}"; then
-                check "${filename}"
-            elif [[ "${filename}" =~ ${FILE_NAME_SEARCH_PATTERN} ]]; then
-                check "${filename}"
-            fi
+        if file -b "${filename}" | grep -qE "${FILE_TYPE_SEARCH_PATTERN}"; then
+            check "${filename}"
+        elif [[ "${filename}" =~ ${FILE_NAME_SEARCH_PATTERN} ]]; then
+            check "${filename}"
         fi
     done < <(find . -type f -not -path "./.git/*" | sed 's|^./||' | sort -Vf)
 }
@@ -197,6 +198,14 @@ function handle_parameters
         parameters=true
     else
         SHOW_ERRORS=true
+    fi
+
+    if [[ -n "${SHOW_SKIPPED-}" ]] && [[ "${SHOW_SKIPPED}" = true ]]; then
+        SHOW_SKIPPED=true
+        echo " Show skipped: false"
+        parameters=true
+    else
+        SHOW_SKIPPED=false
     fi
 
     if [[ -n "${EXCLUDE_FILES-}" ]]; then
@@ -270,9 +279,11 @@ function skip()
 {
     local message="${1:-}"
 
-    file_count=$((file_count+1))
-    if [[ -n "${message}" ]]; then
-        printf ' [ %s%sSkip%s ] %s\n' "${bold}" "${skipped}" "${normal}" "${message}"
+    if [[ "${SHOW_SKIPPED}" == true ]]; then
+        file_count=$((file_count+1))
+        if [[ -n "${message}" ]]; then
+            printf ' [ %s%sSkip%s ] Skipping %s\n' "${bold}" "${skipped}" "${normal}" "${message}"
+        fi
     fi
 }
 
