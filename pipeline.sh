@@ -63,11 +63,11 @@ function install_prerequisites
 # Get the current version of the required tool.                                    #
 # -------------------------------------------------------------------------------- #
 
-function get_version_information
-{
-    VERSION=$("${TEST_COMMAND}" --version | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
-    BANNER="Run ${TEST_COMMAND} (v${VERSION})"
-}
+# function get_version_information
+# {
+#     VERSION=$("${TEST_COMMAND}" --version | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
+#     BANNER="Run ${TEST_COMMAND} (v${VERSION})"
+# }
 
 # -------------------------------------------------------------------------------- #
 # Validate JSON                                                                    #
@@ -378,7 +378,7 @@ function setup
 setup
 handle_parameters
 install_prerequisites
-get_version_information
+# get_version_information
 stage "${BANNER}"
 scan_files
 footer
