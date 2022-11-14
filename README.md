@@ -33,7 +33,7 @@
 
 ## Overview
 
-A tool to check your JSON files in CI/CD pipelines using [jq](https://stedolan.github.io/jq/).
+A tool to check your JSON files in CI/CD pipelines using [jsonlint](https://github.com/Seldaek/jsonlint/).
 
 > Also see: [validate-json](https://github.com/DevelopersToolbox/validate-json) for our bash plugin to do the same thing.
 
