@@ -379,7 +379,7 @@ setup
 handle_parameters
 install_prerequisites
 # get_version_information
-stage "${BANNER}"
+# stage "${BANNER}"
 scan_files
 footer
 
