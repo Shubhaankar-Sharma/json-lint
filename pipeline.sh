@@ -27,7 +27,7 @@ set -Eeuo pipefail
 
 INSTALL_COMMAND="sudo apt-get -qq -y install jsonlint"
 
-TEST_COMMAND='jsonlint'
+TEST_COMMAND='jsonlint-php'
 FILE_TYPE_SEARCH_PATTERN='^JSON'
 FILE_NAME_SEARCH_PATTERN='\.json$'
 
