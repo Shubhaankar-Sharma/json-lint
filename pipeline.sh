@@ -25,9 +25,9 @@ set -Eeuo pipefail
 # CURRENT_STAGE - The current stage used for the reporting output.                 #
 # -------------------------------------------------------------------------------- #
 
-INSTALL_COMMAND="sudo apt-get -qq -y install jq"
+INSTALL_COMMAND="sudo apt-get -qq -y install jsonlint"
 
-TEST_COMMAND='jq'
+TEST_COMMAND='jsonlint'
 FILE_TYPE_SEARCH_PATTERN='^JSON'
 FILE_NAME_SEARCH_PATTERN='\.json$'
 
@@ -79,7 +79,7 @@ function validate_json()
 {
     json_string=$1
 
-    if errors=$("${TEST_COMMAND}" . 2>&1 <<<"${json_string}"); then
+    if errors=$(echo "${json_string}" | "${TEST_COMMAND}"); then
         return 0
     fi
     echo "${errors}"
